@@ -1,0 +1,72 @@
+<nav class="navbar" role="navigation">
+    <div class="container-fluid nav-color">
+        <div style="margin:0 auto;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle bg-primary" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+                    <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav nav-pills" style="display: inline-block;float: none;">
+                    <li class="dropdown">
+                        <a id="dLabel" role="button"  class="btn" data-target="#"
+                           href="{:url('index/index')}">
+                            网站首页
+                        </a>
+                    </li>
+                    {volist name="cateres" id="cate"}
+                    <li class="dropdown">
+                        {switch name="$cate['type']" }
+                        {case value="1"}
+                        <a id="dLabel" role="button" data-toggle="dropdown" class="btn" data-target="{:url('lst/index')}"
+                           href="/center/public/index.php/index/lst/newlst/cateid/{$cate.id}">
+                            {$cate.catename}
+                        </a>
+                        {/case}
+                        {case value="2"}
+                        <a id="dLabel" role="button" data-toggle="dropdown" class="btn" data-target="{:url('lst/index')}"
+                           href="/center/public/index.php/index/lst/index/cateid/{$cate.id}">
+                            {$cate.catename}
+                        </a>
+                        {/case}
+                        {default /}
+
+                        <a style="color: white" href="<?php  if(strpos($cate['url'], 'http://')!==0){echo 'http://'.$cate['url'];}else{echo $cate['url'];} ?>" target='_blank'>{$cate.catename}</a>
+
+                        {/switch}
+
+                        {if condition="$cate['children'] neq 0"}
+                        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                            <?php foreach ($cate['children'] as $k2 => $v2):?>
+                            <li>
+                                {switch name="$v2['type']" }
+                                {case value="1"}
+                                <a id="dLabel" role="button" data-toggle="dropdown" class="btn" data-target="{:url('lst/index')}"
+                                   href="/center/public/index.php/index/lst/newlst/cateid/{$v2.id}">
+                                    {$v2.catename}
+                                </a>
+                                {/case}
+                                {case value="2"}
+                                <a id="dLabel" role="button" data-toggle="dropdown" class="btn" data-target="{:url('lst/index')}"
+                                   href="/center/public/index.php/index/lst/index/cateid/{$v2.id}">
+                                    {$v2.catename}
+                                </a>
+                                {/case}
+                                {default /}
+                                <a style="color: white" href="<?php  if(strpos($v2['url'], 'http://')!==0){echo 'http://'.$v2['url'];}else{echo $v2['url'];} ?>" target='_blank'>{$v2.catename}</a>
+
+                                {/switch}
+
+                            </li>
+                            <?php endforeach;?>
+                        </ul>
+                        {/if}
+                    </li>
+                    {/volist}
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
